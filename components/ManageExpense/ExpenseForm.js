@@ -1,11 +1,11 @@
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { useState } from "react";
 
 import { getFormattedDate } from "../../util/date";
+import { GlobalStyles } from "../../constants/styles";
 
 import Input from "./Input";
 import Button from "../UI/Button";
-import { GlobalStyles } from "../../constants/styles";
 
 const ExpenseForm = ({
   defaultValues,
@@ -31,10 +31,9 @@ const ExpenseForm = ({
     setInputs((prevState) => {
       return {
         ...prevState,
-        [inputIdentifier]: {value: enteredValue, isValid: true},
+        [inputIdentifier]: { value: enteredValue, isValid: true },
       };
     });
-   
   };
 
   const submitHandler = () => {
@@ -48,20 +47,26 @@ const ExpenseForm = ({
     const descriptionIsValid = expenseData.description.trim().length > 0;
 
     if (!amountIsValid || !dateIsValid || !descriptionIsValid) {
-      setInputs((prevState)=>{
-        return{
-            amount: {value: prevState.amount.value, isValid: amountIsValid},
-            date: {value: prevState.date.value, isValid: dateIsValid},
-            description: {value: prevState.description.value, isValid: descriptionIsValid}
-        }
-      })
+      setInputs((prevState) => {
+        return {
+          amount: { value: prevState.amount.value, isValid: amountIsValid },
+          date: { value: prevState.date.value, isValid: dateIsValid },
+          description: {
+            value: prevState.description.value,
+            isValid: descriptionIsValid,
+          },
+        };
+      });
       return;
     }
 
     onSubmit(expenseData);
   };
 
-  const formIsInvalid = !inputs.amount.isValid || !inputs.date.isValid || !inputs.description.isValid
+  const formIsInvalid =
+    !inputs.amount.isValid ||
+    !inputs.date.isValid ||
+    !inputs.description.isValid;
 
   return (
     <View style={styles.form}>
@@ -133,10 +138,10 @@ const styles = StyleSheet.create({
   rowInput: {
     flex: 1,
   },
-  errorText:{
-    textAlign:'center',
+  errorText: {
+    textAlign: "center",
     color: GlobalStyles.colors.error500,
-    margin:8
+    margin: 8,
   },
   buttons: {
     flexDirection: "row",
